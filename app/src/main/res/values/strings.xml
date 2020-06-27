@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">movietime</string>
+    <string name="title_country" />
+    <string name="title_home" />
+    <string name="popular" />
+    <string name="toprate" />
+</resources>
