@@ -1,7 +1,9 @@
 package com.example.movietime;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
@@ -35,6 +37,16 @@ public class MainActivity extends AppCompatActivity {
         gridView=(GridView)findViewById(R.id.gridView);
         progressBar=(ProgressBar)findViewById(R.id.progressBar);
         list_data=new ArrayList<>();
+
+        gridView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                List_data data=list_data.get(position);
+                Intent intent=new Intent(MainActivity.this,second.class);
+                intent.putExtra("id",data.getName());
+                startActivity(intent);
+            }
+        });
 
         // adapter=new MyAdapter(getApplicationContext(),list_data);
         getData();
