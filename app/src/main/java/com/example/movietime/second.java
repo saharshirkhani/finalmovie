@@ -1,12 +1,13 @@
 package com.example.movietime;
+
+import androidx.appcompat.app.AppCompatActivity;
+
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.GridView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
-import androidx.appcompat.app.AppCompatActivity;
 
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
@@ -20,41 +21,41 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
-public class MainActivity extends AppCompatActivity {
 
-    private static final String HI ="https://api.themoviedb.org/4/list/1?api_key=c5def90bdaef09f89aafd98da7f314c1" ;
-    private ArrayList<List_data>list_data;
+public class second extends AppCompatActivity {
+    private static final String address ="https://api.themoviedb.org/4/list/1?api_key=c5def90bdaef09f89aafd98da7f314c1" ;
+    private ArrayList<list_second> listSeconds;
     private GridView gridView;
     MyAdapter adapter;
     ProgressBar progressBar;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_second);
 
-        gridView=(GridView)findViewById(R.id.gridView);
-        progressBar=(ProgressBar)findViewById(R.id.progressBar);
-        list_data=new ArrayList<>();
+        gridView=(GridView)findViewById(R.id.gridView2);
+        progressBar=(ProgressBar)findViewById(R.id.progressBar2);
+        listSeconds=new ArrayList<>();
 
         // adapter=new MyAdapter(getApplicationContext(),list_data);
         getData();
     }
-
-    private void getData() {
-        StringRequest stringRequest =new StringRequest(Request.Method.GET, HI, new Response.Listener<String>() {
+    private void getData(){
+        StringRequest stringRequest =new StringRequest(Request.Method.GET, address, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                Toast.makeText(getApplicationContext(),response,Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), response, Toast.LENGTH_LONG).show();
                 try {
-                    JSONObject jsonObject=new JSONObject(response);
-                    JSONArray array=jsonObject.getJSONArray("results");
-                    for (int i=0; i<array.length(); i++){
-                        JSONObject ob=array.getJSONObject(i);
-                        List_data listData=new List_data(ob.getString("id"),ob.getString("poster_path"));
-                        list_data.add(listData);
+                    JSONObject jsonObject = new JSONObject(response);
+                    JSONArray array = jsonObject.getJSONArray("results");
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject ob = array.getJSONObject(i);
+                        list_second list_seconds = new list_second(ob.getString("original_title"), ob.getString("overview"), ob.getString("release_date"), ob.getString("original_language"));
+                        listSeconds.add(list_seconds);
                     }
-                    Log.i("results =>",list_data.size() + " ");
-                    adapter=new MyAdapter(getApplicationContext(), R.layout.grid_list,list_data);
+                    Log.i("results =>", listSeconds.size() + " ");
+                    adapter = new MyAdapter(getApplicationContext(), R.layout.second,listSeconds);
                     gridView.setAdapter(adapter);
                     progressBar.setVisibility(View.GONE);
                 }
